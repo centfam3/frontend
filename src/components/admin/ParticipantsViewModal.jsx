@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { MdClose, MdFileDownload } from 'react-icons/md';
 import { FaUser, FaEnvelope, FaPhone, FaIdCard } from 'react-icons/fa';
 import axios from 'axios';
+import API_BASE_URL from '../../config';
 
 export default function ParticipantsViewModal({ isOpen, onClose, event }) {
   const [participants, setParticipants] = useState([]);
@@ -20,7 +21,7 @@ export default function ParticipantsViewModal({ isOpen, onClose, event }) {
       setLoading(true);
       try {
         // Fetch all students
-        const response = await axios.get('http://localhost:5000/api/students');
+        const response = await axios.get(`${API_BASE_URL}/api/students`);
         const allStudents = response.data;
 
         // Filter students that are in the event's participants array

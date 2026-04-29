@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../config';
 import { FaCalendarAlt, FaClock, FaMapPin, FaChevronRight, FaSpinner } from 'react-icons/fa';
 
 const UpcomingEvents = ({ onViewAll }) => {
@@ -10,7 +11,7 @@ const UpcomingEvents = ({ onViewAll }) => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/events');
+        const response = await axios.get(`${API_BASE_URL}/api/events`);
         const sortedEvents = response.data.sort((a, b) => new Date(a.date) - new Date(b.date));
         setEvents(sortedEvents);
       } catch (err) {

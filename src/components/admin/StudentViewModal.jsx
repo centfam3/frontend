@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaTimes, FaTrophy, FaCalendarAlt, FaMapMarkerAlt, FaUser, FaPhone, FaEnvelope, FaExclamationTriangle, FaBriefcase, FaUsers, FaClipboardList, FaCheckCircle, FaLaptopCode, FaBookOpen } from 'react-icons/fa';
+import API_BASE_URL from '../../config';
 
 export default function StudentViewModal({ isOpen, onClose, student }) {
   if (!isOpen || !student) return null;
@@ -103,7 +104,7 @@ export default function StudentViewModal({ isOpen, onClose, student }) {
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Medical Certificate</p>
                         {student.medicalCert ? (
                             <a
-                                href={`http://localhost:5000/uploads/${student.medicalCert}`}
+                                href={`${API_BASE_URL}/uploads/${student.medicalCert}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-lg text-sm font-semibold hover:bg-indigo-200 transition"

@@ -86,7 +86,7 @@ export default function StudentDetails() {
       // Manually refetch to ensure fresh data
       setTimeout(async () => {
         try {
-          const freshResponse = await axios.get(`http://localhost:5000/api/students/${id}`);
+          const freshResponse = await axios.get(`${API_BASE_URL}/api/students/${id}`);
           setStudent(freshResponse.data);
         } catch (err) {
           console.error('Error refetching:', err);
@@ -105,7 +105,7 @@ export default function StudentDetails() {
   const handleDeleteAchievement = async (achievementId) => {
     showConfirm('Confirm Delete', 'Are you sure you want to delete this achievement?', async () => {
       try {
-        const response = await axios.delete(`http://localhost:5000/api/students/${id}/achievements/${achievementId}`);
+        const response = await axios.delete(`${API_BASE_URL}/api/students/${id}/achievements/${achievementId}`);
         setStudent(response.data);
         showAlert('Success', 'Achievement deleted successfully!', 'success');
       } catch (error) {
@@ -191,9 +191,9 @@ export default function StudentDetails() {
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl font-bold shadow-sm shadow-indigo-100">
               {student.photo ? (
-                <img src={`http://localhost:5000/uploads/${student.photo}`} alt="Profile" className="w-full h-full rounded-2xl object-cover" />
+                <img src={`${API_BASE_URL}/uploads/${student.photo}`} alt="Profile" className="w-full h-full rounded-2xl object-cover" />
               ) : (
-                <span>{student.firstName[0]}{student.lastName[0]}</span>
+                <FaUser className="text-3xl" />
               )}
             </div>
             <div>
@@ -274,7 +274,7 @@ export default function StudentDetails() {
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Medical Certificate</p>
                     {student.medicalCert ? (
                         <a
-                            href={`http://localhost:5000/uploads/${student.medicalCert}`}
+                            href={`${API_BASE_URL}/uploads/${student.medicalCert}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-100 text-indigo-700 rounded-xl text-sm font-bold hover:bg-indigo-200 transition shadow-sm"

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../config';
 import { FaTimes, FaTrophy, FaCalendarAlt, FaMapMarkerAlt, FaUser, FaPhone, FaEnvelope, FaExclamationTriangle, FaBriefcase, FaUsers, FaBook, FaArrowLeft, FaEdit, FaSave, FaTimes as FaX, FaClipboardList, FaCheckCircle, FaLaptopCode, FaBookOpen, FaPlus, FaTrash } from 'react-icons/fa';
 
 export default function ProfileModal({ isOpen, onClose, student }) {
@@ -11,7 +12,7 @@ export default function ProfileModal({ isOpen, onClose, student }) {
   const fetchStudentData = async () => {
     if (!student?.id) return;
     try {
-      const response = await axios.get(`http://localhost:5000/api/students/${student.id}`);
+      const response = await axios.get(`${API_BASE_URL}/api/students/${student.id}`);
       const studentData = response.data;
       setFormData({
         id: studentData?.id || '',
@@ -137,7 +138,7 @@ export default function ProfileModal({ isOpen, onClose, student }) {
         const photoFormData = new FormData();
         photoFormData.append('photo', formData.photo);
 
-        const photoResponse = await fetch(`http://localhost:5000/api/students/${student.id}/upload-photo`, {
+        const photoResponse = await fetch(`${API_BASE_URL}/api/students/${student.id}/upload-photo`, {
           method: 'POST',
           body: photoFormData,
         });
@@ -155,7 +156,7 @@ export default function ProfileModal({ isOpen, onClose, student }) {
         const medicalFormData = new FormData();
         medicalFormData.append('medicalCert', formData.medicalCert);
 
-        const medicalResponse = await fetch(`http://localhost:5000/api/students/${student.id}/upload-medical`, {
+        const medicalResponse = await fetch(`${API_BASE_URL}/api/students/${student.id}/upload-medical`, {
           method: 'POST',
           body: medicalFormData,
         });
@@ -170,7 +171,7 @@ export default function ProfileModal({ isOpen, onClose, student }) {
       // Then, update the rest of the student data
       const updatedData = { ...formData, photo: photoFileName, medicalCert: medicalCertFileName };
 
-      const response = await fetch(`http://localhost:5000/api/students/${student.id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/students/${student.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -237,7 +238,7 @@ export default function ProfileModal({ isOpen, onClose, student }) {
             <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl font-bold overflow-hidden shadow-inner border border-indigo-100">
               {formData.photo ? (
                 <img 
-                  src={formData.photo instanceof File ? URL.createObjectURL(formData.photo) : `http://localhost:5000/uploads/${formData.photo}`} 
+                  src={formData.photo instanceof File ? URL.createObjectURL(formData.photo) : `${API_BASE_URL}/uploads/${formData.photo}`} 
                   alt="Profile" 
                   className="w-full h-full object-cover" 
                 />
@@ -339,7 +340,7 @@ export default function ProfileModal({ isOpen, onClose, student }) {
                   <div className="flex items-center gap-6">
                     <div className="w-20 h-20 rounded-3xl bg-slate-50 border-2 border-dashed border-indigo-100 flex items-center justify-center overflow-hidden shadow-inner">
                       {formData.photo ? (
-                        <img src={formData.photo instanceof File ? URL.createObjectURL(formData.photo) : `http://localhost:5000/uploads/${formData.photo}`} alt="Preview" className="w-full h-full object-cover" />
+                        <img src={formData.photo instanceof File ? URL.createObjectURL(formData.photo) : `${API_BASE_URL}/uploads/${formData.photo}`} alt="Preview" className="w-full h-full object-cover" />
                       ) : (
                         <FaUser size={28} className="text-indigo-200" />
                       )}
@@ -515,7 +516,7 @@ export default function ProfileModal({ isOpen, onClose, student }) {
                                     />
                                     {formData.medicalCert && typeof formData.medicalCert === 'string' && (
                                         <p className="text-xs text-slate-500 mt-2">
-                                            Current file: <a href={`http://localhost:5000/uploads/${formData.medicalCert}`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">{formData.medicalCert}</a>
+                                            Current file: <a href={`${API_BASE_URL}/uploads/${formData.medicalCert}`} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">{formData.medicalCert}</a>
                                         </p>
                                     )}
                                      {formData.medicalCert instanceof File && (
@@ -531,7 +532,7 @@ export default function ProfileModal({ isOpen, onClose, student }) {
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Medical Certificate</p>
                             {formData.medicalCert ? (
                                 <a
-                                    href={`http://localhost:5000/uploads/${formData.medicalCert}`}
+                                    href={`${API_BASE_URL}/uploads/${formData.medicalCert}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-lg text-sm font-semibold hover:bg-indigo-200 transition"
